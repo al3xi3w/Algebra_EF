@@ -1,0 +1,246 @@
+// Ejercicios resueltos paso a paso. f = fórmulas que usa. src = {pdf, p} o {banco}.
+const SOLVED = [
+{ id: 'r-sub', tema: 's06', f: ['sub'], title: '¿Es subespacio?', src: { pdf: 's06', p: [9, 10] },
+  enun: R`Decide si son subespacios: (a) $W=\{(x,y,z)\in\mathbb{R}^3: x-2y+z=0\}$; (b) $S=\{(x,y)\in\mathbb{R}^2: y=x^2\}$.`,
+  steps: [
+    R`(a) <b>Cero:</b> $0-2\cdot0+0=0$ → $(0,0,0)\in W$.`,
+    R`<b>Suma:</b> si $x_1-2y_1+z_1=0$ y $x_2-2y_2+z_2=0$, entonces $(x_1+x_2)-2(y_1+y_2)+(z_1+z_2)=0+0=0$ → la suma está en $W$.`,
+    R`<b>Escalar:</b> $\alpha x-2\alpha y+\alpha z=\alpha(x-2y+z)=\alpha\cdot0=0$ → $\alpha u\in W$. Cumple las 3: es subespacio (es un plano por el origen).`,
+    R`(b) $(0,0)\in S$, pero $(1,1)\in S$ y $2(1,1)=(2,2)$ no cumple $2=2^2$. Falla la cerradura bajo escalar → <b>no</b> es subespacio.`,
+  ],
+  ans: R`(a) Sí. (b) No: contraejemplo $(1,1)\in S$, $2(1,1)\notin S$.` },
+
+{ id: 'r-cl', tema: 's06', f: ['cl'], title: 'Pesos de una combinación lineal', src: { pdf: 's06', p: [18, 20] },
+  enun: R`Encuentra los pesos para escribir $v=\col{4,5,2}$ como combinación lineal de $u_1=\col{2,0,0}$, $u_2=\col{4,2,0}$, $u_3=\col{3,5,1}$.`,
+  steps: [
+    R`Planteamos $\alpha_1u_1+\alpha_2u_2+\alpha_3u_3=v$, es decir $\mat{2,4,3;0,2,5;0,0,1}\col{\alpha_1,\alpha_2,\alpha_3}=\col{4,5,2}$.`,
+    R`El sistema ya es triangular. De abajo hacia arriba: $\alpha_3=2$.`,
+    R`$2\alpha_2+5(2)=5\Rightarrow\alpha_2=-\tfrac52$.`,
+    R`$2\alpha_1+4(-\tfrac52)+3(2)=4\Rightarrow 2\alpha_1-10+6=4\Rightarrow\alpha_1=4$.`,
+  ],
+  ans: R`$v=4u_1-\tfrac52u_2+2u_3$.` },
+
+{ id: 'r-base', tema: 's06', f: ['li', 'cl'], title: 'Base de ℝ³ y coordenadas', src: { pdf: 's06', p: [22, 32] },
+  enun: R`¿Es $B=\{(1,1,0),(1,0,1),(0,1,1)\}$ una base de $\mathbb{R}^3$? Si lo es, escribe $(2,3,1)$ en esa base.`,
+  steps: [
+    R`Son 3 vectores en $\mathbb{R}^3$: basta ver que son LI. $\det\mat{1,1,0;1,0,1;0,1,1}=1(0-1)-1(1-0)+0=-2\neq0$ → LI → base.`,
+    R`Buscamos $a(1,1,0)+b(1,0,1)+c(0,1,1)=(2,3,1)$: $\ a+b=2,\ a+c=3,\ b+c=1$.`,
+    R`Sumando las tres: $2(a+b+c)=6\Rightarrow a+b+c=3$. Restando cada ecuación: $c=1$, $b=0$, $a=2$.`,
+    R`Comprobación: $2(1,1,0)+0+1(0,1,1)=(2,3,1)$ ✓.`,
+  ],
+  ans: R`Sí es base; $(2,3,1)=2(1,1,0)+0(1,0,1)+1(0,1,1)$.` },
+
+{ id: 'r-fund', tema: 's07', f: ['bases', 'rn'], title: 'Espacios fundamentales y rango-nulidad', src: { pdf: 's07', p: [6, 25, 38, 39] },
+  enun: R`Sea $A=\mat{1,2,0,1;2,4,1,4;3,6,1,5}$. Halla bases de $N(A)$, $\operatorname{row}(A)$ y $\operatorname{col}(A)$, y verifica rango-nulidad.`,
+  steps: [
+    R`Escalonamos: $F_2-2F_1$, $F_3-3F_1$ y luego $F_3-F_2$: $\ R=\mat{1,2,0,1;0,0,1,2;0,0,0,0}$. Pivotes en columnas 1 y 3 → rango $=2$.`,
+    R`$Ax=0$: $x_1=-2x_2-x_4$, $x_3=-2x_4$; libres $x_2=s$, $x_4=t$: $\ x=s\col{-2,1,0,0}+t\col{-1,0,-2,1}$.`,
+    R`Base de $N(A)$: $\{(-2,1,0,0),(-1,0,-2,1)\}$ → $\nu(A)=2$.`,
+    R`Base de $\operatorname{row}(A)$: filas no nulas de $R$: $\{(1,2,0,1),(0,0,1,2)\}$.`,
+    R`Base de $\operatorname{col}(A)$: columnas 1 y 3 <b>de $A$</b>: $\{(1,2,3),(0,1,1)\}$.`,
+    R`Rango-nulidad: $2+2=4=n$ ✓.`,
+  ],
+  ans: R`$N(A)=\operatorname{Gen}\{(-2,1,0,0),(-1,0,-2,1)\}$, $\operatorname{row}=\operatorname{Gen}\{(1,2,0,1),(0,0,1,2)\}$, $\operatorname{col}=\operatorname{Gen}\{(1,2,3),(0,1,1)\}$; $2+2=4$.` },
+
+{ id: 'r-lin', tema: 's09', f: ['tl', 'mest'], title: '¿Es lineal? (ítem 1)', src: { pdf: 's09', p: [18], banco: 'ef' },
+  enun: R`Analiza la linealidad de: (a) $T(x,y)=(x+2y,\ 3x-y)$; (b) $T(x,y,z)=(x-y,\ y+3,\ 2z)$; (c) $T(x,y)=(2x-y,\ x^2+y)$.`,
+  steps: [
+    R`(a) Sean $u=(x_1,y_1)$, $v=(x_2,y_2)$. $T(u+v)=\big(x_1+x_2+2(y_1+y_2),\ 3(x_1+x_2)-(y_1+y_2)\big)=(x_1+2y_1,3x_1-y_1)+(x_2+2y_2,3x_2-y_2)=T(u)+T(v)$.`,
+    R`$T(ku)=(kx_1+2ky_1,\ 3kx_1-ky_1)=k(x_1+2y_1,\ 3x_1-y_1)=kT(u)$. Es lineal, con $A=\mat{1,2;3,-1}$.`,
+    R`(b) $T(0,0,0)=(0,3,0)\neq0$ → <b>no</b> es lineal (falla la condición necesaria $T(0)=0$).`,
+    R`(c) $T(0)=0$, así que hay que buscar un contraejemplo: $T(2,2)=(4-2,\ 4+2)=(2,6)$ y $2T(1,1)=2(1,2)=(2,4)$. Como $(2,6)\neq(2,4)$, falla la homogeneidad.`,
+  ],
+  ans: R`(a) Lineal. (b) No: $T(0)\neq0$. (c) No: $T(2(1,1))\neq2T(1,1)$ (el $x^2$ rompe la linealidad).` },
+
+{ id: 'r-mest', tema: 's09', f: ['mest', 'kerim', 'rn'], title: 'Matriz estándar desde imágenes no canónicas', src: { pdf: 's09', p: [21, 22], banco: 'mar' },
+  enun: R`$T:\mathbb{R}^3\to\mathbb{R}^2$ lineal con $T(1,0,0)=(2,1)$, $T(1,1,0)=(3,0)$, $T(1,1,1)=(1,1)$. Halla la matriz estándar, $T(2,-1,3)$ y $\ker T$.`,
+  steps: [
+    R`Escribimos los canónicos: $e_1=(1,0,0)$, $e_2=(1,1,0)-(1,0,0)$, $e_3=(1,1,1)-(1,1,0)$.`,
+    R`Por linealidad: $T(e_1)=(2,1)$, $T(e_2)=(3,0)-(2,1)=(1,-1)$, $T(e_3)=(1,1)-(3,0)=(-2,1)$.`,
+    R`$A=\mat{2,1,-2;1,-1,1}$ (imágenes en columnas).`,
+    R`$T(2,-1,3)=A\col{2,-1,3}=\col{4-1-6,\ 2+1+3}=\col{-3,6}$.`,
+    R`$\ker T$: $\mat{2,1,-2;1,-1,1}\sim\mat{1,-1,1;0,3,-4}$ → $y=\tfrac43z$, $x=y-z=\tfrac13z$. Con $z=3$: $(1,4,3)$.`,
+    R`Comprobación: $A(1,4,3)=(2+4-6,\ 1-4+3)=(0,0)$ ✓. Rango 2 + nulidad 1 = 3 ✓.`,
+  ],
+  ans: R`$A=\mat{2,1,-2;1,-1,1}$, $T(2,-1,3)=(-3,6)$, $\ker T=\operatorname{Gen}\{(1,4,3)\}$.` },
+
+{ id: 'r-comp', tema: 's10', f: ['comunes', 'mest'], title: 'Composición: rotación y reflexión', src: { pdf: 's10', p: [8, 17] },
+  enun: R`Aplica a $(2,1)$ una rotación de $90^\circ$ antihoraria y luego una reflexión sobre $y=x$. Halla la matriz de la composición e interprétala.`,
+  steps: [
+    R`$R_{90^\circ}=\mat{\cos90^\circ,-\sin90^\circ;\sin90^\circ,\cos90^\circ}=\mat{0,-1;1,0}$, $\ F=\mat{0,1;1,0}$.`,
+    R`Primero rotar, luego reflejar → matriz $FR$ (la última a la izquierda): $FR=\mat{0,1;1,0}\mat{0,-1;1,0}=\mat{1,0;0,-1}$.`,
+    R`$FR\col{2,1}=\col{2,-1}$. (Paso a paso: $R(2,1)=(-1,2)$, luego $F(-1,2)=(2,-1)$ ✓.)`,
+    R`$\mat{1,0;0,-1}$ es la reflexión sobre el eje $X$: la composición equivale a una sola reflexión.`,
+  ],
+  ans: R`$FR=\mat{1,0;0,-1}$ (reflexión sobre el eje $X$); $(2,1)\mapsto(2,-1)$.` },
+
+{ id: 'r-kerim', tema: 's10', f: ['kerim', 'rn', 'bases'], title: 'Núcleo e imagen de una TL', src: { pdf: 's10', p: [24, 25, 26] },
+  enun: R`$T(x,y,z)=(x+y,\ y+z,\ x-z)$. Halla $\ker T$, $\operatorname{Im}T$ (base y ecuación), sus dimensiones, y decide si es inyectiva/sobreyectiva.`,
+  steps: [
+    R`$A=\mat{1,1,0;0,1,1;1,0,-1}$. Escalonando: $F_3-F_1=(0,-1,-1)$, luego $+F_2$ → $\mat{1,1,0;0,1,1;0,0,0}$. Rango 2.`,
+    R`Núcleo: $y=-z$, $x=-y=z$ → $\ker T=\operatorname{Gen}\{(1,-1,1)\}$, dimensión 1.`,
+    R`Imagen: columnas pivote (1 y 2) de $A$: $\operatorname{Im}T=\operatorname{Gen}\{(1,0,1),(1,1,0)\}$, dimensión 2.`,
+    R`Ecuación del plano imagen: normal $(1,0,1)\times(1,1,0)=(-1,1,1)$ → $\operatorname{Im}T=\{(a,b,c): b+c=a\}$. (La 3.ª columna $(0,1,-1)$ cumple $1-1=0$ ✓.)`,
+    R`$1+2=3$ ✓. No es inyectiva ($\ker\neq\{0\}$) ni sobreyectiva ($\operatorname{Im}\neq\mathbb{R}^3$).`,
+  ],
+  ans: R`$\ker T=\operatorname{Gen}\{(1,-1,1)\}$; $\operatorname{Im}T=\operatorname{Gen}\{(1,0,1),(1,1,0)\}=\{b+c=a\}$; $1+2=3$.` },
+
+{ id: 'r-eig2', tema: 's11', f: ['eig', 'trdet'], title: 'Valores y vectores propios 2×2', src: { pdf: 's11', p: [19] },
+  enun: R`Halla valores y vectores propios de $A=\mat{4,2;3,3}$ y verifica con traza y determinante.`,
+  steps: [
+    R`$\det(A-\lambda I)=(4-\lambda)(3-\lambda)-6=\lambda^2-7\lambda+6=(\lambda-1)(\lambda-6)$ → $\lambda_1=1$, $\lambda_2=6$.`,
+    R`$\lambda=1$: $(A-I)=\mat{3,2;3,2}$ → $3x_1+2x_2=0$ → $v_1=(2,-3)$.`,
+    R`$\lambda=6$: $(A-6I)=\mat{-2,2;3,-3}$ → $x_1=x_2$ → $v_2=(1,1)$.`,
+    R`Verificación: $1+6=7=\operatorname{tr}A$ ✓, $1\cdot6=6=12-6=\det A$ ✓.`,
+  ],
+  ans: R`$\lambda=1$: $E_1=\operatorname{Gen}\{(2,-3)\}$; $\lambda=6$: $E_6=\operatorname{Gen}\{(1,1)\}$.` },
+
+{ id: 'r-mult', tema: 's11', f: ['eig', 'mult', 'diag'], title: 'Multiplicidades: ¿diagonalizable?', src: { pdf: 's11', p: [27, 29], banco: 'ef' },
+  enun: R`Para $A=\mat{2,1,0;0,2,0;0,0,3}$ halla $m.a$ y $m.g$ de cada valor propio y decide si es diagonalizable.`,
+  steps: [
+    R`Triangular → valores propios en la diagonal: $p(\lambda)=(\lambda-2)^2(\lambda-3)$. $m.a(2)=2$, $m.a(3)=1$.`,
+    R`$A-2I=\mat{0,1,0;0,0,0;0,0,1}$ tiene rango 2 → $m.g(2)=3-2=1$. $E_2=\operatorname{Gen}\{(1,0,0)\}$.`,
+    R`$A-3I=\mat{-1,1,0;0,-1,0;0,0,0}$ rango 2 → $m.g(3)=1=m.a(3)$, $E_3=\operatorname{Gen}\{(0,0,1)\}$.`,
+    R`Como $m.g(2)=1&lt;2=m.a(2)$, solo hay 2 vectores propios LI → <b>no</b> es diagonalizable.`,
+  ],
+  ans: R`$m.a(2)=2,\ m.g(2)=1$; $m.a(3)=m.g(3)=1$. No diagonalizable.` },
+
+{ id: 'r-prop', tema: 's11', f: ['trdet'], title: 'Propiedades sin calcular la matriz', src: { pdf: 's11', p: [40, 42], banco: 'mar' },
+  enun: R`$A$ es $3\times3$ con valores propios $2,-1,3$. Calcula $\operatorname{tr}A$, $\det A$ y los valores propios de $A^2$, $A^{-1}$ y $A^3+2A$.`,
+  steps: [
+    R`$\operatorname{tr}A=2-1+3=4$; $\ \det A=2(-1)(3)=-6$ (≠0, así que $A$ es invertible).`,
+    R`$A^2$: $\lambda^2$ → $4,\ 1,\ 9$.`,
+    R`$A^{-1}$: $1/\lambda$ → $\tfrac12,\ -1,\ \tfrac13$.`,
+    R`$A^3+2A$: si $Ax=\lambda x$ entonces $(A^3+2A)x=(\lambda^3+2\lambda)x$ → $12,\ -3,\ 33$.`,
+  ],
+  ans: R`$\operatorname{tr}=4$, $\det=-6$; $A^2$: $4,1,9$; $A^{-1}$: $\tfrac12,-1,\tfrac13$; $A^3+2A$: $12,-3,33$.` },
+
+{ id: 'r-diag3', tema: 's12', f: ['eig', 'mult', 'diag'], title: 'Diagonalizar una 3×3', src: { pdf: 's12', p: [20, 21, 22] },
+  enun: R`Diagonaliza $A=\mat{0,0,-2;1,2,1;1,0,3}$.`,
+  steps: [
+    R`$p(\lambda)=\det(A-\lambda I)$; desarrollando por la 2.ª columna: $(2-\lambda)\big[(-\lambda)(3-\lambda)+2\big]=(2-\lambda)(\lambda^2-3\lambda+2)=-(\lambda-2)^2(\lambda-1)$.`,
+    R`$\lambda=2$ ($m.a=2$): $A-2I=\mat{-2,0,-2;1,0,1;1,0,1}\sim\mat{1,0,1;0,0,0;0,0,0}$ → $x_1=-x_3$, $x_2$ libre: $E_2=\operatorname{Gen}\{(-1,0,1),(0,1,0)\}$, $m.g=2$ ✓.`,
+    R`$\lambda=1$: $A-I=\mat{-1,0,-2;1,1,1;1,0,2}$ → $x_1=-2x_3$, $x_2=-x_1-x_3=x_3$: $E_1=\operatorname{Gen}\{(-2,1,1)\}$.`,
+    R`$m.g=m.a$ en ambos → diagonalizable: $P=\mat{-1,0,-2;0,1,1;1,0,1}$, $D=\operatorname{diag}(2,2,1)$.`,
+    R`Comprobación rápida: $\operatorname{tr}A=5=2+2+1$ ✓, $\det A=4=2\cdot2\cdot1$ ✓.`,
+  ],
+  ans: R`$A=PDP^{-1}$ con $P=\mat{-1,0,-2;0,1,1;1,0,1}$, $D=\operatorname{diag}(2,2,1)$.` },
+
+{ id: 'r-sdd1', tema: 's12', f: ['sdd', 'diag', 'markov'], title: 'Población ciudad–campo (ejemplo de clase)', src: { pdf: 's12', p: [28, 30, 32, 33] },
+  enun: R`Cada año el 80% de la ciudad se queda y el 20% se va al campo; el 30% del campo se va a la ciudad y el 70% se queda. Con $x_0=(5,5)$ (miles), halla $x_k$ y su límite.`,
+  steps: [
+    R`(i) $x_k=\col{c_k,r_k}$, $A=\mat{0.8,0.3;0.2,0.7}$. Columna 1 = lo que pasa con la gente de la ciudad; columna 2 = con la del campo.`,
+    R`(ii) $\lambda_1=1$: $A-I=\mat{-0.2,0.3;0.2,-0.3}$ → $2x=3y$ → $v_1=(3,2)$.`,
+    R`(iii) $\lambda_2=\operatorname{tr}A-1=0.5$: $A-0.5I=\mat{0.3,0.3;0.2,0.2}$ → $v_2=(1,-1)$.`,
+    R`(iv) $P=\mat{3,1;2,-1}$, $D=\operatorname{diag}(1,0.5)$. Coeficientes: $3c_1+c_2=5$, $2c_1-c_2=5$ → $c_1=2$, $c_2=-1$. $\ x_k=2\col{3,2}-(0.5)^k\col{1,-1}$.`,
+    R`(v) $(0.5)^k\to0$ → $x_k\to\col{6,4}$: 6 mil en la ciudad y 4 mil en el campo (60%–40%), sin importar cuántos años pasen después.`,
+  ],
+  ans: R`$x_k=2(3,2)-(0.5)^k(1,-1)\to(6,4)$.` },
+
+{ id: 'r-sdd2', tema: 's12', f: ['sdd', 'diag', 'markov'], title: 'Campo vs. ciudad (banco EF 7.1, corregido)', src: { pdf: 's12', p: [26], banco: 'ef' },
+  enun: R`Cada año el 15% de la población rural migra a la ciudad y el 5% de la urbana vuelve al campo. Inicialmente campo $=600\,000$ y ciudad $=400\,000$. Haz los 5 pasos y halla el límite.`,
+  steps: [
+    R`(i) $x_k=\col{\text{campo}_k,\text{ciudad}_k}$, $M=\mat{0.85,0.05;0.15,0.95}$, $x_0=\col{600000,400000}$. Ej.: $m_{21}=0.15$ = fracción del campo que pasa a la ciudad.`,
+    R`(ii) Columnas suman 1 → $\lambda_1=1$. $M-I=\mat{-0.15,0.05;0.15,-0.05}$ → $b=3a$ → $v_1=(1,3)$.`,
+    R`(iii) $\lambda_2=1.8-1=0.8$. $M-0.8I=\mat{0.05,0.05;0.15,0.15}$ → $v_2=(1,-1)$.`,
+    R`(iv) $P=\mat{1,1;3,-1}$, $D=\operatorname{diag}(1,0.8)$. $c_1+c_2=600000$, $3c_1-c_2=400000$ → $c_1=250000$, $c_2=350000$. $\ x_k=250000\col{1,3}+350000(0.8)^k\col{1,-1}$.`,
+    R`(v) $x_k\to250000\col{1,3}=\col{250000,750000}$. Control: el total se conserva ($10^6$) ✓. Ej. $x_1=(530000,470000)$.`,
+  ],
+  ans: R`$\lim x_k=(250\,000,\ 750\,000)$: 25% en el campo y 75% en la ciudad.`,
+  note: R`La respuesta del banco de entrenamiento dice $(2\cdot10^5,\ 6\cdot10^5)$, pero eso suma 800 000 y la población total (1 000 000) se conserva. Lo correcto es $(250\,000,\ 750\,000)$.` },
+
+{ id: 'r-pit', tema: 's13', f: ['orto', 'pi'], title: 'Pitágoras y ortogonalidad (ítem 2)', src: { pdf: 's13', p: [9, 15], banco: 'ef' },
+  enun: R`(a) Demuestra que en $\mathbb{R}^n$: $\ \|u+v\|^2=\|u\|^2+\|v\|^2\iff u\perp v$. (b) Halla $a$ para que $u=(1,a,-2)$ y $v=(2,-1,a)$ sean ortogonales y verifica Pitágoras.`,
+  steps: [
+    R`(a) Por definición de norma y las propiedades (aditividad y simetría): $\|u+v\|^2=\langle u+v,u+v\rangle=\langle u,u\rangle+\langle u,v\rangle+\langle v,u\rangle+\langle v,v\rangle=\|u\|^2+2\langle u,v\rangle+\|v\|^2$.`,
+    R`Entonces $\|u+v\|^2=\|u\|^2+\|v\|^2\iff2\langle u,v\rangle=0\iff\langle u,v\rangle=0\iff u\perp v$. (Las dos implicaciones salen de la misma igualdad.)`,
+    R`(b) $u\cdot v=2-a-2a=2-3a=0\Rightarrow a=\tfrac23$.`,
+    R`Con $a=\tfrac23$: $\|u\|^2=1+\tfrac49+4=\tfrac{49}9$, $\|v\|^2=4+1+\tfrac49=\tfrac{49}9$, $u+v=(3,-\tfrac13,-\tfrac43)$, $\|u+v\|^2=9+\tfrac19+\tfrac{16}9=\tfrac{98}9=\tfrac{49}9+\tfrac{49}9$ ✓.`,
+  ],
+  ans: R`(a) $\|u+v\|^2=\|u\|^2+2\langle u,v\rangle+\|v\|^2$. (b) $a=\tfrac23$.` },
+
+{ id: 'r-proy', tema: 's13', f: ['proy', 'orto'], title: 'Proyección ortogonal', src: { pdf: 's13', p: [24, 27] },
+  enun: R`Sean $u=(3,4)$ y $a=(2,1)$. Halla $\operatorname{proy}_au$ y la componente de $u$ ortogonal a $a$.`,
+  steps: [
+    R`$\langle u,a\rangle=6+4=10$, $\ \|a\|^2=4+1=5$.`,
+    R`$\operatorname{proy}_au=\tfrac{10}{5}(2,1)=(4,2)$.`,
+    R`$u-\operatorname{proy}_au=(3,4)-(4,2)=(-1,2)$. Verificación: $(-1,2)\cdot(2,1)=0$ ✓.`,
+  ],
+  ans: R`$\operatorname{proy}_au=(4,2)$, componente ortogonal $(-1,2)$.` },
+
+{ id: 'r-gs', tema: 's13', f: ['gs', 'pi', 'proy'], title: 'Gram-Schmidt en ℝ³ (ítem 3a)', src: { pdf: 's13', p: [31, 34] },
+  enun: R`Aplica Gram-Schmidt a $u_1=(1,1,0)$, $u_2=(1,0,1)$, $u_3=(0,1,1)$ y obtén una base ortonormal.`,
+  steps: [
+    R`$v_1=u_1=(1,1,0)$, $\|v_1\|^2=2$.`,
+    R`$\langle u_2,v_1\rangle=1$: $v_2=(1,0,1)-\tfrac12(1,1,0)=\tfrac12(1,-1,2)$. Escalamos: $v_2'=(1,-1,2)$, $\|v_2'\|^2=6$.`,
+    R`$\langle u_3,v_1\rangle=1$, $\langle u_3,v_2'\rangle=0-1+2=1$: $v_3=(0,1,1)-\tfrac12(1,1,0)-\tfrac16(1,-1,2)=\big(-\tfrac23,\tfrac23,\tfrac23\big)$ → $v_3'=(-1,1,1)$, $\|v_3'\|^2=3$.`,
+    R`Verifica: $v_1\cdot v_2'=1-1=0$, $v_1\cdot v_3'=-1+1=0$, $v_2'\cdot v_3'=-1-1+2=0$ ✓.`,
+    R`Normalizamos: $q_1=\tfrac1{\sqrt2}(1,1,0)$, $q_2=\tfrac1{\sqrt6}(1,-1,2)$, $q_3=\tfrac1{\sqrt3}(-1,1,1)$.`,
+  ],
+  ans: R`$\left\{\tfrac1{\sqrt2}(1,1,0),\ \tfrac1{\sqrt6}(1,-1,2),\ \tfrac1{\sqrt3}(-1,1,1)\right\}$.` },
+
+{ id: 'r-qr', tema: 's14', f: ['gs', 'qr'], title: 'Factorización QR de una 3×2 (ítem 3b)', src: { pdf: 's14', p: [15, 16, 17] },
+  enun: R`Halla la factorización QR de $A=\mat{1,1;1,0;0,1}$.`,
+  steps: [
+    R`$u_1=(1,1,0)$, $u_2=(1,0,1)$. $q_1=\tfrac{1}{\sqrt2}(1,1,0)$.`,
+    R`$u_2\cdot q_1=\tfrac1{\sqrt2}$: $v_2=u_2-\tfrac1{\sqrt2}q_1=(1,0,1)-\tfrac12(1,1,0)=(\tfrac12,-\tfrac12,1)$, $\|v_2\|=\sqrt{\tfrac32}$, $q_2=\tfrac1{\sqrt6}(1,-1,2)$.`,
+    R`$R=\mat{u_1\cdot q_1,u_2\cdot q_1;0,u_2\cdot q_2}=\mat{\tfrac{2}{\sqrt2},\tfrac1{\sqrt2};0,\tfrac{3}{\sqrt6}}=\mat{\sqrt2,\tfrac{\sqrt2}{2};0,\tfrac{\sqrt6}{2}}$.`,
+    R`$Q=\mat{1/\sqrt2,1/\sqrt6;1/\sqrt2,-1/\sqrt6;0,2/\sqrt6}$ ($3\times2$, $Q^\top Q=I_2$). Comprobación: 1.ª columna de $QR$: $\sqrt2\,q_1=(1,1,0)$ ✓.`,
+  ],
+  ans: R`$Q=\mat{1/\sqrt2,1/\sqrt6;1/\sqrt2,-1/\sqrt6;0,2/\sqrt6}$, $R=\mat{\sqrt2,1/\sqrt2;0,3/\sqrt6}$.` },
+
+{ id: 'r-dorto', tema: 's13', f: ['dorto', 'eig', 'gs'], title: 'Diagonalización ortogonal 3×3', src: { pdf: 's13', p: [42, 43, 45] },
+  enun: R`Diagonaliza ortogonalmente $A=\mat{4,2,2;2,4,2;2,2,4}$.`,
+  steps: [
+    R`$A$ es simétrica → se puede. $p(\lambda)=(\lambda-2)^2(\lambda-8)$ (comprobación: $2+2+8=12=\operatorname{tr}A$).`,
+    R`$\lambda=2$: $A-2I$ tiene todas las filas $(2,2,2)$ → $x_1+x_2+x_3=0$: $E_2=\operatorname{Gen}\{(-1,1,0),(-1,0,1)\}$. Estos <b>no</b> son ortogonales (producto 1).`,
+    R`Gram-Schmidt en $E_2$: $v_1=(-1,1,0)$, $v_2=(-1,0,1)-\tfrac12(-1,1,0)=\tfrac12(-1,-1,2)$.`,
+    R`$\lambda=8$: $E_8=\operatorname{Gen}\{(1,1,1)\}$ (ya ortogonal a $E_2$ por ser $A$ simétrica).`,
+    R`Normalizando: $P=\mat{-1/\sqrt2,-1/\sqrt6,1/\sqrt3;1/\sqrt2,-1/\sqrt6,1/\sqrt3;0,2/\sqrt6,1/\sqrt3}$, $D=P^\top AP=\operatorname{diag}(2,2,8)$.`,
+  ],
+  ans: R`$A=PDP^\top$ con la $P$ ortogonal de arriba y $D=\operatorname{diag}(2,2,8)$.` },
+
+{ id: 'r-svd1', tema: 's14', f: ['svd', 'eig', 'pi'], title: 'SVD completa de una 3×2 (ítem 4)', src: { pdf: 's14', p: [27, 28, 29, 30, 31, 32] },
+  enun: R`Halla la SVD de $A=\mat{1,1;0,1;1,0}$ indicando el orden de cada matriz.`,
+  steps: [
+    R`$A^\top A=\mat{2,1;1,2}$, $p(\lambda)=(\lambda-3)(\lambda-1)$ → $\sigma_1=\sqrt3$, $\sigma_2=1$.`,
+    R`Vectores propios normalizados: $v_1=\tfrac{1}{\sqrt2}(1,1)$ ($\lambda=3$), $v_2=\tfrac1{\sqrt2}(1,-1)$ ($\lambda=1$). $V=\tfrac1{\sqrt2}\mat{1,1;1,-1}$ ($2\times2$).`,
+    R`$u_1=\tfrac{1}{\sigma_1}Av_1=\tfrac{1}{\sqrt3}\cdot\tfrac{1}{\sqrt2}(2,1,1)=\tfrac{1}{\sqrt6}(2,1,1)$; $\ u_2=Av_2=\tfrac1{\sqrt2}(0,-1,1)$.`,
+    R`Falta $u_3$ (porque $m=3$): ortogonal a $(2,1,1)$ y $(0,-1,1)$ → $2x_1+x_2+x_3=0$, $-x_2+x_3=0$ → $(-1,1,1)$ → $u_3=\tfrac1{\sqrt3}(-1,1,1)$.`,
+    R`$U=\mat{2/\sqrt6,0,-1/\sqrt3;1/\sqrt6,-1/\sqrt2,1/\sqrt3;1/\sqrt6,1/\sqrt2,1/\sqrt3}$ ($3\times3$, $U^\top U=I$), $\Sigma=\mat{\sqrt3,0;0,1;0,0}$ ($3\times2$).`,
+  ],
+  ans: R`$A=U\Sigma V^\top$ con $U$ ($3\times3$ ortogonal), $\Sigma=\mat{\sqrt3,0;0,1;0,0}$, $V=\tfrac1{\sqrt2}\mat{1,1;1,-1}$.` },
+
+{ id: 'r-svd2', tema: 's14', f: ['svd', 'eig', 'gs'], title: 'SVD de rango 1 (ejemplo de clase corregido)', src: { pdf: 's14', p: [42, 43, 44] },
+  enun: R`Halla la SVD de $A=\mat{-3,1;6,-2;6,-2}$.`,
+  steps: [
+    R`$A^\top A=\mat{81,-27;-27,9}$: traza 90, determinante 0 → $\lambda_1=90$, $\lambda_2=0$. $\sigma_1=\sqrt{90}=3\sqrt{10}$, $\sigma_2=0$ (rango 1).`,
+    R`$\lambda=90$: $\mat{-9,-27;-27,-81}$ → $x_1=-3x_2$ → $v_1=\tfrac1{\sqrt{10}}(-3,1)$. $\ \lambda=0$: $v_2=\tfrac1{\sqrt{10}}(1,3)$.`,
+    R`$u_1=\tfrac{1}{3\sqrt{10}}Av_1=\tfrac{1}{3\sqrt{10}}\cdot\tfrac{1}{\sqrt{10}}(10,-20,-20)=\tfrac13(1,-2,-2)$.`,
+    R`Completar $U$: ortogonales a $(1,-2,-2)$ → $x_1=2x_2+2x_3$: $w_1=(2,1,0)$, $w_2=(2,0,1)$. No son ortogonales ($w_1\cdot w_2=4$) → Gram-Schmidt: $w_2-\tfrac45w_1=\tfrac15(2,-4,5)$.`,
+    R`$u_2=\tfrac{1}{\sqrt5}(2,1,0)$, $u_3=\tfrac{1}{3\sqrt5}(2,-4,5)$. Comprobación: $(2,-4,5)\cdot(1,-2,-2)=2+8-10=0$ ✓.`,
+    R`$U=\mat{1/3,2/\sqrt5,2/(3\sqrt5);-2/3,1/\sqrt5,-4/(3\sqrt5);-2/3,0,5/(3\sqrt5)}$, $\Sigma=\mat{3\sqrt{10},0;0,0;0,0}$ ($3\times2$), $V=\tfrac1{\sqrt{10}}\mat{-3,1;1,3}$.`,
+  ],
+  ans: R`$\sigma_1=3\sqrt{10}$; $A=\sigma_1u_1v_1^\top$ con $u_1=\tfrac13(1,-2,-2)$, $v_1=\tfrac1{\sqrt{10}}(-3,1)$.`,
+  note: R`La diapositiva dice $\lambda=9$ (es 90), escribe $-40$ en $AA^\top$ (es $-20$), pone $\Sigma$ de $2\times2$ (debe ser $3\times2$) y usa $\tfrac1{\sqrt5}(2,1,0)$, $\tfrac1{\sqrt5}(2,0,1)$, que no son ortogonales entre sí.` },
+
+{ id: 'r-svd3', tema: 's14', f: ['svd', 'eig'], title: 'SVD de una 2×3 (ejemplo propuesto en clase)', src: { pdf: 's14', p: [33] },
+  enun: R`Determina la SVD de $A=\mat{0,1,-1;1,1,0}$.`,
+  steps: [
+    R`$A^\top A=\mat{1,1,0;1,2,-1;0,-1,1}$ con $p(\lambda)=-\lambda(\lambda-1)(\lambda-3)$ → $\sigma_1=\sqrt3$, $\sigma_2=1$ (y $\lambda_3=0$). Atajo: $AA^\top=\mat{2,1;1,2}$ tiene los mismos valores propios no nulos (3 y 1).`,
+    R`$v_1=\tfrac1{\sqrt6}(1,2,-1)$, $v_2=\tfrac1{\sqrt2}(1,0,1)$, $v_3=\tfrac1{\sqrt3}(-1,1,1)$ (este último genera $N(A)$).`,
+    R`$u_1=\tfrac1{\sqrt3}Av_1=\tfrac{1}{\sqrt{18}}(3,3)=\tfrac1{\sqrt2}(1,1)$; $\ u_2=Av_2=\tfrac1{\sqrt2}(-1,1)$.`,
+    R`$U=\tfrac1{\sqrt2}\mat{1,-1;1,1}$ ($2\times2$), $\Sigma=\mat{\sqrt3,0,0;0,1,0}$ ($2\times3$), $V=[v_1|v_2|v_3]$ ($3\times3$).`,
+    R`Para $B=\mat{0,1;1,1;-1,0}=A^\top$: $B=V\Sigma^\top U^\top$ (se intercambian los papeles de $U$ y $V$).`,
+  ],
+  ans: R`$\sigma=\sqrt3,1$; $U=\tfrac1{\sqrt2}\mat{1,-1;1,1}$, $V=\mat{1/\sqrt6,1/\sqrt2,-1/\sqrt3;2/\sqrt6,0,1/\sqrt3;-1/\sqrt6,1/\sqrt2,1/\sqrt3}$.` },
+
+{ id: 'r-rank1', tema: 's14', f: ['rank', 'svd'], title: 'Mejor aproximación de rango 1', src: { pdf: 's14', p: [38], banco: 'mar' },
+  enun: R`Para $A=\mat{2,1;1,2}$, halla la mejor aproximación de rango 1 y su error.`,
+  steps: [
+    R`$A$ es simétrica con $\lambda=3,1$ y $A^\top A=A^2$ → $\sigma_1=3$, $\sigma_2=1$; $v_1=u_1=\tfrac1{\sqrt2}(1,1)$.`,
+    R`$A_1=\sigma_1u_1v_1^\top=3\cdot\tfrac12\mat{1,1;1,1}=\mat{1.5,1.5;1.5,1.5}$.`,
+    R`$A-A_1=\mat{0.5,-0.5;-0.5,0.5}$, $\|A-A_1\|_F=\sqrt{4\cdot0.25}=1=\sigma_2$ ✓.`,
+  ],
+  ans: R`$A_1=\mat{1.5,1.5;1.5,1.5}$, error $=\sigma_2=1$.` },
+];
